@@ -1,5 +1,7 @@
-# Default LLM provider to use when none specified
-default_provider = "claude"  # Options: "claude" or "openai"
+# Default LLM provider to use when none specified through the CLI
+provider = "claude" # Options: "claude" or "openai"
+enable_tools = true
+max_steps = 10
 
 # Optional system prompt to set the AI assistant's behavior and capabilities
 system_prompt = """You are a command-line assistant focused on helping users with CLI commands. Your primary goals are:
@@ -31,7 +33,5 @@ default_model = "claude-3-5-sonnet-20241022"
 max_tokens = 8192
 
 [openai]
-default_model = "gpt-3.5-turbo"
-max_tokens = 1024
-
-# Add any future provider configurations here
+default_model = "gpt-4o"
+max_tokens = 16383

@@ -1,0 +1,12 @@
+doc-valid-idents = ["OpenAI", "ChatGPT", "Claude", "LLM"]
+cargo-ignore-publish = true
+allowed-duplicate-crates = [
+    "base64",
+    "bitflags",
+    "hashbrown",
+    "syn",
+    "getRandom",
+    "thiserror",
+    "thiserror-impl",
+    "wasi",
+]
