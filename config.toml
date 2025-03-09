@@ -1,6 +1,6 @@
 # Default LLM provider to use when none specified through the CLI
-provider = "claude" # Options: "claude" or "openai"
-enable_tools = true
+provider = "claude"  # Options: "claude" or "openai"
+enable_tools = false
 max_steps = 10
 
 # Optional system prompt to set the AI assistant's behavior and capabilities
