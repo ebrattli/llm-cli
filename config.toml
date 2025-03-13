@@ -29,7 +29,7 @@ Code formatting rules:
 Always prioritize accuracy and security in command suggestions. If a command could be potentially destructive, warn the user and explain the implications."""
 
 [claude]
-default_model = "claude-3-5-sonnet-20241022"
+default_model = "claude-3-7-sonnet-20250219"
 max_tokens = 8192
 
 [openai]

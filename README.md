@@ -42,7 +42,7 @@ enable_tools = true  # Enable/disable tool execution
 max_steps = 10      # Maximum number of tool execution steps
 
 [claude]
-default_model = "claude-3-5-sonnet-20241022"
+default_model = "claude-3-7-sonnet-20250219"
 max_tokens = 8192
 
 [openai]
@@ -93,16 +93,6 @@ Limit tool execution steps:
 ```bash
 llm-cli --enable-tools --max-steps 5 "Initialize a git repository"
 ```
-
-## Dependencies
-
-Key dependencies:
-- clap: Command line argument parsing
-- tokio: Async runtime
-- reqwest: HTTP client
-- serde: Serialization/deserialization
-- syntect: Syntax highlighting
-- config: Configuration management
 
 ## License
 

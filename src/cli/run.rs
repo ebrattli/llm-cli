@@ -24,7 +24,12 @@ fn create_llm_client(config: Config, debug: bool) -> Result<Box<dyn LLMClient>, 
                 eprintln!("[DEBUG] Initializing Claude client");
             }
             let api_key = dotenv::var("ANTHROPIC_API_KEY")
-                .map_err(|_| LLMError::ApiError("ANTHROPIC_API_KEY not set in .env".to_string()))?;
+                .or_else(|_| std::env::var("ANTHROPIC_API_KEY"))
+                .map_err(|_| {
+                    LLMError::ApiError(
+                        "ANTHROPIC_API_KEY not set in .env or environment".to_string(),
+                    )
+                })?;
             Ok(Box::new(ClaudeClient::new(api_key, config)))
         }
         Provider::OpenAI => {
@@ -32,15 +37,17 @@ fn create_llm_client(config: Config, debug: bool) -> Result<Box<dyn LLMClient>, 
                 eprintln!("[DEBUG] Initializing OpenAI client");
             }
             let api_key = dotenv::var("OPENAI_API_KEY")
-                .map_err(|_| LLMError::ApiError("OPENAI_API_KEY not set in .env".to_string()))?;
+                .or_else(|_| std::env::var("OPENAI_API_KEY"))
+                .map_err(|_| {
+                    LLMError::ApiError("OPENAI_API_KEY not set in .env or environment".to_string())
+                })?;
             Ok(Box::new(OpenAIClient::new(api_key, config)))
         }
     }
 }
 
 pub async fn run(args: Args) -> Result<(), LLMError> {
-    dotenv::dotenv()
-        .map_err(|e| LLMError::ConfigError(format!("Failed to load .env file: {e}")))?;
+    let _ = dotenv::dotenv();
 
     let query = args.query;
     if query.is_empty() {
