@@ -4,6 +4,8 @@ use serde::Deserialize;
 use std::fs;
 use std::path::Path;
 
+include!(concat!(env!("OUT_DIR"), "/config_embedded.rs"));
+
 #[derive(Debug, Deserialize, Clone)]
 pub struct ProviderConfig {
     pub default_model: String,
@@ -30,14 +32,24 @@ pub enum Provider {
     OpenAI,
 }
 
+impl Default for Config {
+    fn default() -> Self {
+        toml::from_str(DEFAULT_CONFIG).expect("Invalid default config")
+    }
+}
+
 impl Config {
     pub fn load() -> Result<Self, LLMError> {
         let config_path = Path::new("config.toml");
-        let contents = fs::read_to_string(config_path)
-            .map_err(|e| LLMError::ConfigError(format!("Failed to read config file: {e}")))?;
+        if config_path.exists() {
+            let contents = fs::read_to_string(config_path)
+                .map_err(|e| LLMError::ConfigError(format!("Failed to read config file: {e}")))?;
 
-        toml::from_str(&contents)
-            .map_err(|e| LLMError::ConfigError(format!("Failed to parse config file: {e}")))
+            toml::from_str(&contents)
+                .map_err(|e| LLMError::ConfigError(format!("Failed to parse config file: {e}")))
+        } else {
+            Ok(Self::default())
+        }
     }
 
     pub fn update_provider(&mut self, new_provider: Provider) {

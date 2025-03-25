@@ -9,6 +9,9 @@ edition = "2021"
 keywords = ["llm", "cli", "command-line", "tool"]
 categories = ["command-line-utilities"]
 
+[package.metadata.rust-analyzer]
+buildScripts.enable = true
+
 [dependencies]
 anyhow = "1.0.95"
 async-stream = "0.3"
